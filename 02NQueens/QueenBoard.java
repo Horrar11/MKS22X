@@ -12,33 +12,24 @@ public class QueenBoard{
     }
 
     private boolean solveH(int r){
+	if(r >= board.length){
+	    return true;
+	}
 	for(int c = 0; c < board.length; c++){
-	    if(r<board.length){
-		if(board[r][c] == 0){
-		    addQueen(r,c);
-		    qnum++;
-		    if(qnum == board.length){
-			return true;
-		    }
-			if(!solveH(r++)){
-			    removeQueen(r,c);
-			    qnum--;
-			    return false;
-			}
-			else{
-			    solutionCount ++;
-			    return solveH(r+1);
-			}
+	    if(board[r][c] == 0){
+		addQueen(r,c);
+		if(solveH(r+1)){
+		    return true;
 		}
 		else{
-		    return false;
+		    removeQueen(r,c);
 		}
 	    }
 	    else{
 		return false;
 	    }
-	}
-	return true;
+       	}
+	return false;
     }
     
     public int getSolutionCount(){
@@ -46,24 +37,26 @@ public class QueenBoard{
     }
     
     private void addQueen(int r, int c){
-	board[r][c] -= 2;
 	for(int i = 0; i < board.length; i++){
 	    for(int j = 0; j < board.length; j++){
 		if(i == r || i == c|| j == r || j == c){
-		    board[r][c]++;
+		    board[i][j]++;
+		    qnum++;
 		}
 	    }
 	}
+	board[r][c] = -1;
     }
     private void removeQueen(int r, int c){
-	board[r][c] += 2;
 	for(int i = 0; i < board.length; i++){
 	    for(int j = 0; j < board.length; j++){
 		if(i == r || i == c|| j == r || j == c){
-		    board[r][c]--;
+		    board[i][j]--;
+		    qnum--;
 		}
 	    }
 	}
+	board[r][c] = 0;
     }
     
     public String toString(){
