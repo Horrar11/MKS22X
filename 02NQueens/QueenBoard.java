@@ -1,6 +1,7 @@
 public class QueenBoard{
     private int[][]board;
     private int solutionCount = -1;
+    private int qnum = 0;
 
     public QueenBoard(int size){
 	board = new int[size][size];
@@ -11,21 +12,33 @@ public class QueenBoard{
     }
 
     private boolean solveH(int r){
-	for(int c = 0; c < board[r].length; c++){
+	for(int c = 0; c < board.length; c++){
 	    if(r<board.length){
 		if(board[r][c] == 0){
 		    addQueen(r,c);
-		    if(!solveH(r++)){
-			removeQueen(r,c);
-			return false;
+		    qnum++;
+		    if(qnum == board.length){
+			return true;
 		    }
+			if(!solveH(r++)){
+			    removeQueen(r,c);
+			    qnum--;
+			    return false;
+			}
+			else{
+			    solutionCount ++;
+			    return solveH(r+1);
+			}
 		}
-		else{}
+		else{
+		    return false;
+		}
 	    }
 	    else{
 		return false;
 	    }
 	}
+	return true;
     }
     
     public int getSolutionCount(){
@@ -60,6 +73,7 @@ public class QueenBoard{
 		if(board[i][j] == -1){toOut += "Q";}
 		else{toOut += "_";}
 	    }
+	    toOut += "\n";
 	}
 	return toOut;
     }
