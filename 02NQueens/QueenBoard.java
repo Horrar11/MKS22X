@@ -25,9 +25,9 @@ public class QueenBoard{
 		    removeQueen(r,c);
 		}
 	    }
-	    else{
-		return false;
-	    }
+	    //else{
+	    //	return false;
+	    //}
        	}
 	return false;
     }
@@ -41,22 +41,46 @@ public class QueenBoard{
 	    for(int j = 0; j < board.length; j++){
 		if(i == r || i == c|| j == r || j == c){
 		    board[i][j]++;
-		    qnum++;
 		}
 	    }
 	}
+	for(int i = r, j = c;i >= 0 && j >= 0;i--, j--){
+	    board[i][j]++;
+	}
+	for(int i = r, j = c;i >= 0 && j < board.length;i--, j++){
+	    board[i][j]++;
+	}
+	for(int i = r, j = c;i < board.length && j >= 0;i++, j--){
+	    board[i][j]++;
+	}
+	for(int i = r, j = c;i < board.length && j < board.length;i++, j++){
+	    board[i][j]++;
+	}
 	board[r][c] = -1;
+	qnum++;
     }
     private void removeQueen(int r, int c){
 	for(int i = 0; i < board.length; i++){
 	    for(int j = 0; j < board.length; j++){
 		if(i == r || i == c|| j == r || j == c){
 		    board[i][j]--;
-		    qnum--;
 		}
 	    }
 	}
+	for(int i = r, j = c;i >= 0 && j >= 0;i--, j--){
+	    board[i][j]--;
+	}
+	for(int i = r, j = c;i >= 0 && j < board.length;i--, j++){
+	    board[i][j]--;
+	}
+	for(int i = r, j = c;i < board.length && j >= 0;i++, j--){
+	    board[i][j]--;
+	}
+	for(int i = r, j = c;i < board.length && j < board.length;i++, j++){
+	    board[i][j]--;
+	}
 	board[r][c] = 0;
+	qnum--;
     }
     
     public String toString(){
