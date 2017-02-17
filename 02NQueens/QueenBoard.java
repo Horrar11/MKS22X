@@ -18,7 +18,9 @@ public class QueenBoard{
 	for(int c = 0; c < board.length; c++){
 	    if(board[r][c] == 0){
 		addQueen(r,c);
+		System.out.println(this);
 		if(solveH(r+1)){
+		    // System.out.println("hello");
 		    return true;
 		}
 		else{
@@ -88,10 +90,19 @@ public class QueenBoard{
 	for(int i = 0; i<board.length; i++){
 	    for(int j = 0; j<board[i].length; j++){
 		if(board[i][j] == -1){toOut += "Q";}
-		else{toOut += "_";}
+		else{toOut += board[i][j];}
 	    }
 	    toOut += "\n";
 	}
 	return toOut;
+    }
+
+    public static void main(String[]args){
+	QueenBoard b = new QueenBoard(4);
+	System.out.println(b.getSolutionCount());
+	System.out.println(b);
+	b.solve();
+	System.out.println(b);
+	System.out.println(b.getSolutionCount());
     }
 }
