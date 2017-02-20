@@ -1,8 +1,7 @@
 public class QueenBoard{
     private int[][]board;
-    private int solutionCount = -1;
-    private int qnum = 0;
-
+    private int solutionCount;
+    
     public QueenBoard(int size){
 	board = new int[size][size];
     }
@@ -18,7 +17,7 @@ public class QueenBoard{
 	for(int c = 0; c < board.length; c++){
 	    if(board[r][c] == 0){
 		addQueen(r,c);
-		System.out.println(this);
+		//System.out.println(this);
 		if(solveH(r+1)){
 		    // System.out.println("hello");
 		    return true;
@@ -35,74 +34,98 @@ public class QueenBoard{
     }
     
     public int getSolutionCount(){
+        if (solutionCount == 0 && (board.length!=2 || board.length != 3)){
+	    return -1;
+	}
 	return solutionCount;
+    }
+
+    public void countSolutions(){
+	countSolH(0, false);
+    }
+
+    private boolean countSolH(int r, boolean fin){
+	if(r >= board.length){
+	    if(!fin){
+		solutionCount++;
+		return fin;
+	    }
+	    else{
+		return fin;
+	    }
+	}
+	for(int c = 0; c < board.length; c++){
+	    if(board[r][c] == 0){
+		addQueen(r,c);
+		if(countSolH(r + 1, fin)){
+		    return true;
+		}
+		else{
+		    removeQueen(r,c);
+		}
+	    }
+	}
+	return false;
     }
     
     private void addQueen(int r, int c){
-	for(int i = 0; i < board.length; i++){
-	    for(int j = 0; j < board.length; j++){
-		if(i == r || i == c|| j == r || j == c){
-		    board[i][j]++;
-		}
-	    }
+	for(int i = c+1; i < board.length; i++){
+	    board[r][i] = board[r][i] + 1;
 	}
-	for(int i = r, j = c;i >= 0 && j >= 0;i--, j--){
-	    board[i][j]++;
+	for(int i = r+1; i < board.length; i++){
+	    board[i][c] = board[i][c] + 1;
 	}
-	for(int i = r, j = c;i >= 0 && j < board.length;i--, j++){
-	    board[i][j]++;
+	for(int col = c, row = r; row < board.length && col < board.length; row++, col++){
+	    board[row][col] = board[row][col]+1;
 	}
-	for(int i = r, j = c;i < board.length && j >= 0;i++, j--){
-	    board[i][j]++;
+	
+	for(int col = c,  row = r; row > -1 && col < board.length; row--, col++){
+	    board[row][col] = board[row][col]+1;
 	}
-	for(int i = r, j = c;i < board.length && j < board.length;i++, j++){
-	    board[i][j]++;
-	}
-	board[r][c] = -1;
-	qnum++;
+	board[r][c]=-1;
     }
+    
     private void removeQueen(int r, int c){
-	for(int i = 0; i < board.length; i++){
-	    for(int j = 0; j < board.length; j++){
-		if(i == r || i == c|| j == r || j == c){
-		    board[i][j]--;
-		}
-	    }
+	for(int i = c+1; i < board.length; i++){
+	    board[r][i] = board[r][i] - 1;
 	}
-	for(int i = r, j = c;i >= 0 && j >= 0;i--, j--){
-	    board[i][j]--;
+	for(int i = r+1; i < board.length; i++){
+	    board[i][c] = board[i][c] - 1;
 	}
-	for(int i = r, j = c;i >= 0 && j < board.length;i--, j++){
-	    board[i][j]--;
+	for(int col = c, row = r; row < board.length && col < board.length; row++, col++){
+	    board[row][col] = board[row][col] - 1;
 	}
-	for(int i = r, j = c;i < board.length && j >= 0;i++, j--){
-	    board[i][j]--;
+	
+	for(int col = c,  row = r; row > -1 && col < board.length; row--, col++){
+	    board[row][col] = board[row][col] - 1;
 	}
-	for(int i = r, j = c;i < board.length && j < board.length;i++, j++){
-	    board[i][j]--;
-	}
-	board[r][c] = 0;
-	qnum--;
+	board[r][c]=0;
     }
+    
     
     public String toString(){
 	String toOut = "";
 	for(int i = 0; i<board.length; i++){
 	    for(int j = 0; j<board[i].length; j++){
 		if(board[i][j] == -1){toOut += "Q";}
-		else{toOut += board[i][j];}
+		else{toOut += "_";}//board[i][j];}
 	    }
 	    toOut += "\n";
 	}
 	return toOut;
     }
-
-    public static void main(String[]args){
-	QueenBoard b = new QueenBoard(4);
-	System.out.println(b.getSolutionCount());
-	System.out.println(b);
-	b.solve();
-	System.out.println(b);
-	System.out.println(b.getSolutionCount());
-    }
+    
+    /*public static void main(String[]args){
+      QueenBoard b = new QueenBoard(5);
+      System.out.println(b.getSolutionCount());
+      //System.out.println(b);
+      //b.addQueen(3,3);
+      //System.out.println(b);
+      //b.removeQueen(3,3);
+      //System.out.println(b);
+      b.solve();
+      System.out.println(b);
+      b.countSolutions();
+      System.out.println(b.getSolutionCount());
+      }*/
 }
