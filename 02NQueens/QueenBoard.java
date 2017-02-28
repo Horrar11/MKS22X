@@ -41,6 +41,7 @@ public class QueenBoard{
     }
 
     public void countSolutions(){
+	solutionCount = 0;
 	countSolH(0, false);
     }
 
