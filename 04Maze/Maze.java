@@ -12,27 +12,22 @@ public class Maze{
       ' ' - locations that can be moved onto
       'E' - the location of the goal (exactly 1 per file)
       'S' - the location of the start(exactly 1 per file)
-
+      
       2. The maze has a border of '#' around the edges. So you don't have to check for out of bounds!
       3. When the file is not found OR there is no E or S then: print an error and exit the program.
     */
     public Maze(String filename){
         File file = new File(filename);
-	BufferedReader reader = null;
+	Scanner in = new Scanner(file);
 	try {
-	    reader = new BufferedReader(new FileReader(file));
-	    String text = null;
-	    
-	    while((text = reader.readLine()) != null){
-		maze // change to a for loop
-	    }
+	    File file = new 
 	}
-	catch FileNotFoundException(){
+	catch FileNotFoundException("File not found Bro!!!"){
 		System.exit(1);
 	    }
         animate = false;
     }
-
+    
     public void setAnimate(boolean b){
         animate = b;
     }
