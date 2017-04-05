@@ -1,5 +1,5 @@
 import java.util.*;
-public class MyLinkedList{
+public class MyLinkedList implements Iterable<Integer>{
     
     private class LNode{
 	LNode next,prev;
@@ -55,6 +55,7 @@ public class MyLinkedList{
 	LNode temp = head;
 	if(index > size/2){
 	    temp = tail;
+	    
 	}
 	else{
 	     
@@ -70,4 +71,6 @@ public class MyLinkedList{
     public int remove(int index){/*complete this*/}
     
     public void add(int index,int value){}
+    
+    public Iterator<T> iterator(){}
 }
