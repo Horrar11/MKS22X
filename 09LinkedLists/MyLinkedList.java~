@@ -1,0 +1,17 @@
+public class MyLinkedList{
+    public MyLinkedList(){
+	Node start, end;
+	int size;
+    }
+    public static void main(String[]args){}
+    
+    public class Node{
+	int value;
+	Node next, prev;
+	public Node(int value, Node next, Node prev){
+	    this.value = value;
+	    this.next = next;
+	    this.prev = prev;
+	}
+    }
+}

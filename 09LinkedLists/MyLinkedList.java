@@ -12,7 +12,7 @@ public class MyLinkedList implements Iterable<Integer>{
 	}
     }
     
-    LNode head,tail;
+    LNode head,tail, current;
     int size;
     
     public MyLinkedList(){
@@ -24,9 +24,28 @@ public class MyLinkedList implements Iterable<Integer>{
     }
     
     
-    private LNode getNthNode(int n){/*complete this*/}
+    private LNode getNthNode(int n){
+	LNode temp = head;
+	if(n > size/2){
+	    temp = tail;
+	    for(int i = size - 1; i >= n; i--){
+		temp = temp.prev;
+	    }
+	}
+	else{
+	    for(int i = 0; i < n; i++){
+		temp = temp.next;
+	    }
+	}
+	return temp;
+    }
     
-    private void addAfter(LNode location, LNode toBeAdded){/*complete this*/  }
+    private void addAfter(LNode location, LNode toBeAdded){
+	location.next.prev = toBeAdded;
+	toBeAdded.next = location.next;
+	location.next = toBeAdded;
+	toBeAdded.prev = location;
+    }
     
     private void remove(LNode target){
 	target.prev.next = target.next;
@@ -34,11 +53,17 @@ public class MyLinkedList implements Iterable<Integer>{
 	size--;
     }
     
-    public String toString(){ /*complete this*/  }
+    public String toString(){
+	String toRet = "";
+	for(int i = 0; i < size(); i++){
+	    
+	}
+    }
     
     public boolean add(int value){
 	LNode RNode = new LNode(value);
 	if(size == 0){
+	    current = RNode;
 	    head = RNode;
 	    tail = RNode;
 	}
@@ -52,25 +77,37 @@ public class MyLinkedList implements Iterable<Integer>{
     }
     
     public int get(int index){
-	LNode temp = head;
-	if(index > size/2){
-	    temp = tail;
-	    
-	}
-	else{
-	     
-	}
+	return getNthNode(index).value;
     }
     
     public int set(int index, int value){
-	
+	getNthNode(index).value = value;
+	return value;
     }
     
-    public int indexOf(int value){/*complete this*/}
+    public int indexOf(int value){
+	for(int i = 0; i < size; i++){
+	    if(getNthNode(i).value == value){
+		return i;
+	    }
+	}
+	return -1;
+    }
     
-    public int remove(int index){/*complete this*/}
+    public int remove(int index){
+	LNode RNode = getNthNode(index); 
+	remove(getNthNode(index));
+	return RNode.value;
+    }
     
-    public void add(int index,int value){}
+    public void add(int index,int value){
+	LNode RNode = getNthNode(index);
+	LNode NNode = new LNode(value);
+	RNode.prev.next = NNode;
+	NNode.prev = RNode.prev;
+	NNode.next = RNode;
+	RNode.prev = NNode;
+    }
     
     public Iterator<T> iterator(){}
 }
