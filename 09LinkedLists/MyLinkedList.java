@@ -13,7 +13,7 @@ public class MyLinkedList implements Iterable<Integer>{
     }
     
     LNode head,tail, current;
-    int size;
+    int size, cp;
     
     public MyLinkedList(){
 	size = 0;
@@ -25,19 +25,20 @@ public class MyLinkedList implements Iterable<Integer>{
     
     
     private LNode getNthNode(int n){
-	LNode temp = head;
-	if(n > size/2){
-	    temp = tail;
-	    for(int i = size - 1; i >= n; i--){
-		temp = temp.prev;
+	if(cp == n){
+	    return current;
+	}
+	if(cp > n){
+	    for(cp > n; cp--){
+		current = current.prev;
 	    }
 	}
-	else{
-	    for(int i = 0; i < n; i++){
-		temp = temp.next;
+	if(cp < n){
+	    for(cp < n; cp++){
+		current = current.next;
 	    }
 	}
-	return temp;
+	return current;
     }
     
     private void addAfter(LNode location, LNode toBeAdded){
@@ -66,6 +67,7 @@ public class MyLinkedList implements Iterable<Integer>{
 	    current = RNode;
 	    head = RNode;
 	    tail = RNode;
+	    cp = 0;
 	}
 	else{
 	    RNode.prev = tail;
