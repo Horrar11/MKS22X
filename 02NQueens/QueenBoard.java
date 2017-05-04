@@ -34,7 +34,10 @@ public class QueenBoard{
     }
     
     public int getSolutionCount(){
-        if (solutionCount == 0 && (board.length!=2 || board.length != 3)){
+	if(board.length == 2 || board.length == 3){
+	    return 0;
+	}
+	else if (solutionCount == 0 && (board.length!=2 || board.length != 3)){
 	    return -1;
 	}
 	return solutionCount;
@@ -45,20 +48,22 @@ public class QueenBoard{
 	countSolH(0, false);
     }
 
-    private boolean countSolH(int r, boolean fin){
-	if(r >= board.length){
-	    if(!fin){
+    private boolean countSolH(int c, boolean done){
+	if(c >= board.length){
+	    if(!done){
 		solutionCount++;
-		return fin;
+		//System.out.println(this);
+		return done;
 	    }
 	    else{
-		return fin;
+		//System.out.println(this);
+		return done;
 	    }
 	}
-	for(int c = 0; c < board.length; c++){
+	for(int r = 0; r < board.length; r++){
 	    if(board[r][c] == 0){
 		addQueen(r,c);
-		if(countSolH(r + 1, fin)){
+		if(countSolH(c + 1, done)){
 		    return true;
 		}
 		else{
@@ -72,9 +77,7 @@ public class QueenBoard{
     private void addQueen(int r, int c){
 	for(int i = c+1; i < board.length; i++){
 	    board[r][i] = board[r][i] + 1;
-	}
-	for(int i = r+1; i < board.length; i++){
-	    board[i][c] = board[i][c] + 1;
+	    
 	}
 	for(int col = c, row = r; row < board.length && col < board.length; row++, col++){
 	    board[row][col] = board[row][col]+1;
@@ -89,9 +92,7 @@ public class QueenBoard{
     private void removeQueen(int r, int c){
 	for(int i = c+1; i < board.length; i++){
 	    board[r][i] = board[r][i] - 1;
-	}
-	for(int i = r+1; i < board.length; i++){
-	    board[i][c] = board[i][c] - 1;
+	    
 	}
 	for(int col = c, row = r; row < board.length && col < board.length; row++, col++){
 	    board[row][col] = board[row][col] - 1;
