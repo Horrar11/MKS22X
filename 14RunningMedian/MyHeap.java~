@@ -1,11 +1,11 @@
 import java.util.*;
 public class MyHeap{
     
-    private ArrayList<String> heap;
+    private ArrayList<Integer> heap;
     private int size;
     public MyHeap(){
-	heap = new ArrayList<String>(1);
-	heap.add("DUMMY");
+	heap = new ArrayList<Integer>(1);
+	heap.add(null);
 	size = 0;
     }
     
@@ -15,7 +15,7 @@ public class MyHeap{
 	}
     }
     
-    public void add(String s){
+    public void add(int s){
 	heap.add(s);
 	size++;
 	pushUp(size);
@@ -31,13 +31,13 @@ public class MyHeap{
 	return toRet;
     }
 
-    public String peek(){
+    public int peek(){
 	return heap.get(1);
     }
 
     public void pushUp(int ind){
 	if(heap.get(ind)>heap.get(ind/2)){
-	    String temp = heap.get(ind/2);
+	    int temp = heap.get(ind/2);
 	    heap.set(ind/2, heap.get(ind));
 	    heap.set(ind, temp);
 	    pushUp(ind/2);
@@ -46,7 +46,7 @@ public class MyHeap{
 
     public void pushDown(int ind){
 	if(!(heap.get(ind) >= heap.get(ind*2) && heap.get(ind) >= heap.get(ind*2+1)){
-		String temp = heap.get(ind);
+		int temp = heap.get(ind);
 		if(heap.get(ind) > heap.get(2*ind)){
 		    heap.set(ind, heap.get(2*ind+1));
 		    heap.set(2*ind+1, temp);
